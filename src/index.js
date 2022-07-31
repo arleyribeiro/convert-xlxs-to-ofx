@@ -6,14 +6,15 @@ const parserOfx = require('./parser/parser-ofx');
 const moment = require('moment');
 const util = require('./helpers/util');
 
-const outputNameDefault = `${util.normalizeDate(new Date(), 'YYYY-MM-DD')}-output.ofx`;
-const xlsxPath = 'ofx-example.xlsx';
+const formatDate = 'YYYY-MM-DD-HH-mm-ss';
+const outputNameDefault = `${util.normalizeDate(new Date(), formatDate)}-output.ofx`;
+const xlsxPath = 'ofx-example';
 
 const schema = {
   properties: {
     filename: {
       type: 'string',
-      message: 'Filename, default folder: bank_statement',
+      message: 'Filename, default folder: bank_statement, extension: xlsx',
       required: true,
       default: xlsxPath
     },
@@ -35,7 +36,7 @@ const schema = {
 const main = async () => {
   prompt.start();
   const { filename, sheetName, outputName } = await prompt.get(schema);
-  const xlsxPath = path.join(__dirname, `bank_statement/${filename}`);
+  const xlsxPath = path.join(__dirname, `bank_statement/${filename}.xlsx`);
   
   const info = parserXlsx.generateInfoBySheet(xlsxPath, sheetName);
   
