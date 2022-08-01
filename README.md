@@ -14,3 +14,19 @@ Criar no arquivo uma planilha com nome o *bank* o script irá usar essas infoma�
 Número do banco | Nome | Agencia | Conta |
 | --- | --- | --- | --- |
 102 | XP Investimentos Corretora de Câmbio Títulos e Valores Mobiliários S.A | 0001 | 0000000 |
+
+## Pasta bank_statement
+
+Possui uma planilha *(ofx-example.xlsx)* com exemplo das informações necessárias
+
+## Arquivo gerado
+
+O arquivo gerado será salvo na pasta *data*
+
+## Como executar o projeto
+
+Execute o arquivo index.js na pasta *src* e responda as perguntas apresentadas no terminal
+
+```
+node src/index.js
+```
