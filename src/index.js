@@ -7,7 +7,7 @@ const moment = require('moment');
 const util = require('./helpers/util');
 
 const formatDate = 'YYYY-MM-DD-HH-mm-ss';
-const outputNameDefault = `${util.normalizeDate(new Date(), formatDate)}-output.ofx`;
+const outputNameDefault = `${util.normalizeDate(new Date(), formatDate)}-output`;
 const xlsxPath = 'ofx-example';
 
 const schema = {
@@ -43,7 +43,7 @@ const main = async () => {
   console.log(info);
   
   const ofx = parserOfx.generateOfx(info);
-  const saveFilePath = path.join(__dirname, `data/${outputName}`);
+  const saveFilePath = path.join(__dirname, `data/${outputName}.ofx`);
 
   fs.writeFile(saveFilePath, ofx, function (err) {
     if (err) return console.log(err);
