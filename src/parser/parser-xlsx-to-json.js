@@ -48,11 +48,21 @@ const mapExcelToJson = (filePath, pageName = PAGE_NAME) => {
   return normalizeData((result && result[page]) || []);
 };
 
+const normalizeTransactions = (transactions) => {
+  if (size(transactions) === 1) {
+    const transaction = first(transactions);
+    const { description, amount, balance, startDate, endDate } = transaction || {};
+    if (!description && !balance && !amount && startDate && endDate) {
+      return [];
+    }
+  }
+  return transactions;
+};
+
 const generateInfoBySheet = (filePath, pageName = PAGE_NAME) => {
-  const result = mapExcelToJson(filePath, pageName);
-  const transactions = size(result) === 0 ? [] : result;
-  const firstTransaction = first(transactions);
-  const lastTransaction = getLastTransaction(transactions);
+  const transactions = mapExcelToJson(filePath, pageName);
+  const firstTransaction = first(transactions) || {};
+  const lastTransaction = getLastTransaction(transactions) || {};
   const { startDate, endDate } = firstTransaction;
   const { balance: ledgerBalance = '0,00' } = lastTransaction;
   const bank = mapBankToJson(filePath);
@@ -62,7 +72,7 @@ const generateInfoBySheet = (filePath, pageName = PAGE_NAME) => {
     startDate,
     endDate,
     ledgerBalance,
-    transactions
+    transactions: normalizeTransactions(transactions)
   }
 };
 
