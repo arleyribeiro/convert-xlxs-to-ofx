@@ -50,7 +50,7 @@ const mapExcelToJson = (filePath, pageName = PAGE_NAME) => {
 
 const generateInfoBySheet = (filePath, pageName = PAGE_NAME) => {
   const result = mapExcelToJson(filePath, pageName);
-  const transactions = size(result) === 1 ? [] : result;
+  const transactions = size(result) === 0 ? [] : result;
   const firstTransaction = first(transactions);
   const lastTransaction = getLastTransaction(transactions);
   const { startDate, endDate } = firstTransaction;
@@ -67,7 +67,7 @@ const generateInfoBySheet = (filePath, pageName = PAGE_NAME) => {
 };
 
 const getLastTransaction = (transactions) => {
-  return size(transactions) > 1 ? last(transactions) : {};
+  return size(transactions) > 0 ? last(transactions) : {};
 }
 
 const normalizeData = (transactions) => {
